@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 interface Settings {
   listName: string;
   primaryColor: string;
+  font: string;
 }
 
 interface SettingsProps {
@@ -24,6 +25,14 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange, onClose
     { name: 'Orange', value: '#f39c12' },
   ];
 
+  const fontOptions = [
+    { name: 'Sans-serif', value: 'Arial, Helvetica, sans-serif' },
+    { name: 'Serif', value: 'Garamond, serif' },
+    { name: 'Monospace', value: '"Courier New", Courier, monospace' },
+    { name: 'Cursive', value: '"Bradley Hand", cursive' },
+    { name: 'Fantasy', value: 'Luminari, fantasy' },
+  ];
+
   const handleColorChange = (color: string) => {
     const newSettings = { ...settings, primaryColor: color };
     onSettingsChange(newSettings);
@@ -32,6 +41,12 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange, onClose
     // Update shadow color based on the selected primary color
     const shadowColor = color + '66'; // Add 40% opacity (66 in hex)
     document.documentElement.style.setProperty('--color-shadow-primary', shadowColor);
+  };
+
+  const handleFontChange = (font: string) => {
+    const newSettings = { ...settings, font: font };
+    onSettingsChange(newSettings);
+    document.documentElement.style.setProperty('--font-family', font);
   };
 
   const handleNameSave = () => {
@@ -90,6 +105,22 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange, onClose
                 onClick={() => handleColorChange(color.value)}
                 title={color.name}
               />
+            ))}
+          </div>
+        </div>
+
+        <div className="setting-group">
+          <label>Font:</label>
+          <div className="font-options">
+            {fontOptions.map((font) => (
+              <button
+                key={font.value}
+                className={`font-option ${settings.font === font.value ? 'active' : ''}`}
+                onClick={() => handleFontChange(font.value)}
+                style={{ fontFamily: font.value }}
+              >
+                {font.name}
+              </button>
             ))}
           </div>
         </div>

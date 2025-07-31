@@ -28,6 +28,8 @@
   --spacing-xxl: 24px;
   --spacing-xxxl: 30px;
   --spacing-xxxxl: 40px;
+
+  --horizontal-padding: 43px;
   
   /* Border radius */
   --border-radius-none: 0;
@@ -67,6 +69,9 @@
   --z-overlay: 2;
   --z-grid: 3;
   --z-header: 4;
+  
+  /* Font family */
+  --font-family: Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -75,10 +80,11 @@
   box-sizing: border-box;
 }
 
+body, input, button, textarea {
+  font-family: var(--font-family, Arial, Helvetica, sans-serif);
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-background);
@@ -100,7 +106,7 @@ body {
   box-shadow: var(--shadow-large) var(--color-shadow-box);
   overflow: hidden;
   position: relative;
-  padding: var(--spacing-xxl) 43px;
+  padding: calc(var(--spacing-xxl) / 2) 0;
   min-height: 400px;
   min-width: 400px;
 }
@@ -123,7 +129,7 @@ body {
 .notebook-header {
   background: var(--color-primary);
   color: var(--color-text-white);
-  padding: var(--spacing-lg) var(--spacing-xxl);
+  padding: var(--spacing-lg) var(--horizontal-padding);
   text-align: center;
   position: relative;
   z-index: var(--z-header);
@@ -143,9 +149,28 @@ body {
 
 .controls-section {
   display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-xxl);
+  flex-direction: row;
+  margin-top: calc(var(--spacing-xxl) / 4);
+  margin-bottom: calc(var(--spacing-xxl) / 4);
   width: 100%;
+}
+
+.controls-section-inner {
+  width: var(--horizontal-padding);
+  background: var(--color-primary-light);
+}
+
+.controls-section-inner-red {
+  width: var(--horizontal-padding);
+  background: var(--color-primary-light);
+  border-right: 3px solid var(--color-danger);
+}
+
+.controls-section-inner-content {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - var(--horizontal-padding) * 2);
+  background: var(--color-primary-light);
 }
 
 .add-todo-form {
@@ -170,7 +195,7 @@ body {
   font-size: var(--font-size-md);
   outline: none;
   color: var(--color-text-primary);
-  padding-left: var(--spacing-sm);
+  padding: 0 var(--spacing-md);
 }
 
 .todo-input::placeholder {
@@ -235,7 +260,7 @@ body {
   margin-bottom: var(--spacing-xxl);
   height: 350px;
   overflow-y: auto;
-  padding-right: var(--spacing-sm);
+  padding: 0 var(--horizontal-padding);
 }
 
 /* Custom scrollbar for the todo list */
@@ -364,7 +389,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-sm);
   transition: var(--transition-normal);
   opacity: 0;
 }
@@ -622,4 +647,36 @@ body {
   font-size: var(--font-size-sm);
   font-weight: bold;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Font options */
+.font-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.font-option {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  background: var(--color-primary-light);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+.font-option:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-small) var(--color-shadow-primary);
+}
+
+.font-option.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  box-shadow: var(--shadow-small) var(--color-shadow-primary);
 }
