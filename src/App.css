@@ -92,12 +92,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xxl);
 }
 
 .app {
   width: 100%;
-  max-width: 600px;
+  max-width: 486px;
   margin: 0 auto;
 }
 
@@ -106,9 +105,8 @@ body {
   box-shadow: var(--shadow-large) var(--color-shadow-box);
   overflow: hidden;
   position: relative;
-  padding: calc(var(--spacing-xxl) / 2) 0;
-  min-height: 400px;
-  min-width: 400px;
+  padding-top: calc(var(--spacing-xxl) / 2);
+  width: 400px;
 }
 
 .notebook::before {
@@ -133,6 +131,18 @@ body {
   text-align: center;
   position: relative;
   z-index: var(--z-header);
+  width: 400px;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 500px) {
+  .app {
+    max-width: 100%;
+  }
+  
+  .notebook, .notebook-header {
+    width: 100%;
+  }
 }
 
 .notebook-header h1 {
@@ -228,7 +238,7 @@ body {
   margin: 0;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 500px;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
   align-items: center;
@@ -257,8 +267,8 @@ body {
 }
 
 .todo-list {
-  margin-bottom: var(--spacing-xxl);
-  height: 350px;
+  /* margin-bottom: var(--spacing-xxl); */
+  height: calc(var(--spacing-xxl) * 15);
   overflow-y: auto;
   padding: 0 var(--horizontal-padding);
 }
@@ -311,12 +321,12 @@ body {
 
 .todo-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   background: transparent;
   transition: var(--transition-normal);
   position: relative;
-  height: var(--height-todo-item);
+  min-height: var(--height-todo-item);
   cursor: grab;
 }
 
@@ -335,9 +345,10 @@ body {
 
 .todo-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-md);
   flex: 1;
+  min-width: 0;
 }
 
 .checkbox {
@@ -351,6 +362,7 @@ body {
   transition: var(--transition-normal);
   flex-shrink: 0;
   margin-left: var(--spacing-md);
+  margin-top: calc((var(--height-todo-item) - var(--height-checkbox)) / 2);
 }
 
 .checkbox:hover {
@@ -370,8 +382,11 @@ body {
 .todo-text {
   font-size: var(--font-size-md);
   color: var(--color-text-primary);
-  line-height: 1.5;
+  line-height: var(--height-todo-item);
   word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .todo-item.completed .todo-text {
@@ -406,12 +421,11 @@ body {
 
 .clear-completed {
   text-align: center;
-  margin-top: var(--spacing-xxl);
 }
 
 .clear-btn {
   height: var(--height-filter-btn);
-  background: var(--color-primary-light);
+  background: transparent;
   color: var(--color-primary);
   cursor: pointer;
   font-size: var(--font-size-sm);
@@ -679,4 +693,74 @@ body {
   background: var(--color-primary);
   color: var(--color-text-white);
   box-shadow: var(--shadow-small) var(--color-shadow-primary);
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  font-size: var(--font-size-sm);
+}
+
+.toggle-button:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-small) var(--color-shadow-primary);
+}
+
+.toggle-button.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  box-shadow: var(--shadow-small) var(--color-shadow-primary);
+}
+
+/* Progress bar styles */
+.progress-section {
+  padding: var(--spacing-lg) var(--horizontal-padding);
+  background: var(--color-primary-light);
+  margin-top: var(--spacing-lg);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.progress-percentage {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px var(--color-shadow-box);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--border-radius-lg);
+  transition: width var(--transition-normal);
+  box-shadow: 0 2px 4px var(--color-shadow-primary);
 }

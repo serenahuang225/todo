@@ -4,6 +4,8 @@ interface Settings {
   listName: string;
   primaryColor: string;
   font: string;
+  audioEnabled: boolean;
+  showProgressBar: boolean;
 }
 
 interface SettingsProps {
@@ -47,6 +49,16 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange, onClose
     const newSettings = { ...settings, font: font };
     onSettingsChange(newSettings);
     document.documentElement.style.setProperty('--font-family', font);
+  };
+
+  const handleAudioToggle = () => {
+    const newSettings = { ...settings, audioEnabled: !settings.audioEnabled };
+    onSettingsChange(newSettings);
+  };
+
+  const handleProgressBarToggle = () => {
+    const newSettings = { ...settings, showProgressBar: !settings.showProgressBar };
+    onSettingsChange(newSettings);
   };
 
   const handleNameSave = () => {
@@ -122,6 +134,32 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange, onClose
                 {font.name}
               </button>
             ))}
+          </div>
+        </div>
+
+        <div className="setting-group">
+          <label>Audio:</label>
+          <div className="toggle-option">
+            <button
+              className={`toggle-button ${settings.audioEnabled ? 'active' : ''}`}
+              onClick={handleAudioToggle}
+            >
+              {settings.audioEnabled ? '🔊' : '🔇'}
+              <span>{settings.audioEnabled ? 'Enabled' : 'Disabled'}</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="setting-group">
+          <label>Progress Bar:</label>
+          <div className="toggle-option">
+            <button
+              className={`toggle-button ${settings.showProgressBar ? 'active' : ''}`}
+              onClick={handleProgressBarToggle}
+            >
+              {settings.showProgressBar ? '📊' : '📊'}
+              <span>{settings.showProgressBar ? 'Show' : 'Hide'}</span>
+            </button>
           </div>
         </div>
       </div>
