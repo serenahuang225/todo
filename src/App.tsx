@@ -261,6 +261,21 @@ function App() {
   const completedTime = completedTodos.reduce((sum, todo) => sum + (todo.timeEstimate || 0), 0);
   const progressPercentage = totalTime > 0 ? (completedTime / totalTime) * 100 : 0;
 
+  // Format time display
+  const formatTime = (minutes: number) => {
+    if (minutes < 60) {
+      return `${minutes} minutes`;
+    } else {
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      if (remainingMinutes === 0) {
+        return `${hours} hour${hours > 1 ? 's' : ''}`;
+      } else {
+        return `${hours} hour${hours > 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}`;
+      }
+    }
+  };
+
   return (
     <div className="app">
       <div className="settings-button" onClick={() => setShowSettings(!showSettings)}>
@@ -323,7 +338,7 @@ function App() {
             <div className="progress-section">
               <div className="progress-info">
                 <span className="progress-text">
-                  {completedTime} / {totalTime} minutes completed
+                  {formatTime(completedTime)} / {formatTime(totalTime)} completed
                 </span>
                 <span className="progress-percentage">
                   {Math.round(progressPercentage)}%
